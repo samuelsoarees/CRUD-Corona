@@ -4,7 +4,7 @@ local scene = composer.newScene()
 
 local widget = require("widget")
 
-local bancoDados = require("bancoDados")
+local bd = require("bancoDados")
 
 local nome
 local cpf
@@ -18,13 +18,13 @@ function scene:create(event)
 
 	local sceneGroup = self.view
 	
-	txtNome = display.newText({text = "Nome: ", x = 30 , y = medicao.y1 , fontSize = 25, align = "left" })
+	local txtNome = display.newText({text = "Nome: ", x = 30 , y = medicao.y1 , fontSize = 25, align = "left" })
 	
-	txtCpf = display.newText({text = "Cpf: ", x = 15 , y = medicao.y1*2 , fontSize = 25, align = "left" })
+	local txtCpf = display.newText({text = "Cpf: ", x = 15 , y = medicao.y1*2 , fontSize = 25, align = "left" })
 	
-	txtEmail = display.newText({text = "Email: ", x = 25 , y = medicao.y1*3 , fontSize = 25, align = "left" })
+	local txtEmail = display.newText({text = "Email: ", x = 25 , y = medicao.y1*3 , fontSize = 25, align = "left" })
 	
-	txtSenha = display.newText({text = "Senha: ", x = 30 , y = medicao.y1*4 , fontSize = 25, align = "left" })
+	local txtSenha = display.newText({text = "Senha: ", x = 30 , y = medicao.y1*4 , fontSize = 25, align = "left" })
 	
 	
 	cadastrar = widget.newButton({label ="Cadastrar",x = (medicao.x1/2)+(medicao.x1/4),y = medicao.y1 *5})
@@ -39,6 +39,11 @@ function scene:create(event)
 	
 	
 	-- inserção nos grupos
+	sceneGroup:insert(txtNome)
+	sceneGroup:insert(txtCpf)
+	sceneGroup:insert(txtEmail)
+	sceneGroup:insert(txtSenha)
+	
 	sceneGroup:insert(cadastrar)
 	sceneGroup:insert(voltar)
 	
@@ -47,15 +52,36 @@ end
 
 
 function scene:show(event)
-	nome = native.newTextField((display.contentWidth - display.contentWidth/2)+5, medicao.y1,200,30)
+		
+		if event.phase == "did" then
+		nome = native.newTextField((display.contentWidth - display.contentWidth/2)+5, medicao.y1,200,30)
 	
-	cpf = native.newTextField((display.contentWidth - display.contentWidth/2)+5, medicao.y1*2,200,30)
+		cpf = native.newTextField((display.contentWidth - display.contentWidth/2)+5, medicao.y1*2,200,30)
 	
-	email = native.newTextField((display.contentWidth - display.contentWidth/2)+5, medicao.y1*3,200,30)
+		email = native.newTextField((display.contentWidth - display.contentWidth/2)+5, medicao.y1*3,200,30)
 	
-	senha= native.newTextField((display.contentWidth - display.contentWidth/2)+5, medicao.y1*4,200,30)
+		senha= native.newTextField((display.contentWidth - display.contentWidth/2)+5, medicao.y1*4,200,30)
 	
-	senha.isSecure = true
+		senha.isSecure = true
+
+		
+		end
+end
+
+
+
+function scene:hide(event)
+
+	if event.phase == "will" then
+		
+		
+		display.remove(nome)
+		display.remove(cpf)
+		display.remove(email)
+		display.remove(senha)
+		
+	
+	end
 
 end
 
@@ -65,7 +91,7 @@ function cadastrarPessoa(event)
 
 	if event.phase == "ended" then
 		
-		bancoDados:criaPessoa()
+		
 
 	end
 
@@ -86,4 +112,6 @@ end
 
 scene:addEventListener( "create", scene )
 scene:addEventListener("show",scene)
+
+scene:addEventListener("hide",scene)
 return scene

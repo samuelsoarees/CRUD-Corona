@@ -34,9 +34,11 @@ end
 function scene:show(event) 
 	
 	if event.phase == "did" then
-	email = native.newTextField( display.contentWidth/2, display.contentHeight/3,200,30)
-	senha = native.newTextField( display.contentWidth/2, display.contentHeight/4*2,200,30)
-	senha.isSecure = true
+		
+		email = native.newTextField( display.contentWidth/2, display.contentHeight/3,200,30)
+		senha = native.newTextField( display.contentWidth/2, display.contentHeight/4*2,200,30)
+		senha.isSecure = true
+		
 	end
 	
 end
